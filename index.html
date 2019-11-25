@@ -8,34 +8,6 @@
 			height: 99%;
 			width: 99%
 		}
-		@font-face {
-			font-family: 'lato';
-			src: url(./font/Lato-Light.ttf);
-		}
-		@font-face {
-			font-family: "webfontSourceHanSansSC";
-			src: url(./font/SourceHanSansCN-Light.ttf);
-		}
-		@font-face {
-		  font-family: "SourceHanSansCN-Light";
-		  src: url("../font/SourceHanSansCN-Light.otf"),
-			url("../font/SourceHanSansCN-Light.ttf");
-		  font-family: "SourceHanSansCN-Normal";
-		  src: url("../font/SourceHanSansCN-Normal.otf");
-		  font-family: "SourceHanSansCN-Regular";
-		  src: url("../font/SourceHanSansCN-Regular.otf");
-
-		  font-family: "Trump";
-		  src: url("../font/trumpgothiceast_bold-webfont.eot");
-		  src: url("../font/trumpgothiceast_bold-webfont.eot?#iefix")
-			  format("embedded-opentype"),
-			url("../font/trumpgothiceast_bold-webfont.woff2") format("woff2"),
-			url("../font/trumpgothiceast_bold-webfont.woff") format("woff"),
-			url("../font/trumpgothiceast_bold-webfont.ttf") format("truetype"),
-			url("../font/trumpgothiceast_bold-webfont.svg#trumpgothiceast_boldbold")
-			  format("svg");
-		}	
-		
 		.img1{
 			width: 100%;
 			height: 80%;
@@ -47,27 +19,56 @@
 			margin: auto;
 		}
 		.num{
-			font-family: "SourceHanSansCN-Normal";
+			font-family: "STCaiyun";
 			font-size: 30px;
 			position: absolute;
-			top: 49%;
-			color: red;
-			left: 43%;
+			bottom: 5%;
+			color: white;
+			right: 3%;
 		}
 	</style>
-  <!--  <link rel="stylesheet" type="text/css" href="./css/common.css" media="all" />-->
   </head>
   <body style="background-color: black;">
     <div>
      <img class="img1" src="time.png"/>
+	 <form id="form1" runat="server">
+        <div id="show" class="num">
+        </div>
+    </form>
     </div>
-    <!--<script type="text/javascript" src="js/lib/jquery/jQuery.v1.11.1.min.js"></script>
-    <script type="text/javascript" src="js/lib/plugin/moment.min.js"></script>
-    <script type="text/javascript" src="js/data.js"></script>
-    <script type="text/javascript" src="js/timeline.js"></script> -->
-    <!-- <script type="text/javascript" src="js/index.js"></script> -->
     <script>
-      
+		TimeDown("show", "2020-01-17 18:00:00");
+		function TimeDown(id, endDateStr) {
+			//结束时间
+			var endDate = new Date(endDateStr);
+			//当前时间
+			var nowDate = new Date();
+			//相差的总秒数
+			var totalSeconds = parseInt((endDate - nowDate) / 1000);
+			//天数
+			var days = Math.floor(totalSeconds / (60 * 60 * 24));
+			//取模（余数）
+			var modulo = totalSeconds % (60 * 60 * 24);
+			//小时数
+			var hours = Math.floor(modulo / (60 * 60));
+			modulo = modulo % (60 * 60);
+			//分钟
+			var minutes = Math.floor(modulo / 60);
+			if (minutes < 10) {
+				minutes = "0" + minutes;
+			}
+			//秒
+			var seconds = modulo % 60;
+			if (seconds < 10) {
+				seconds = "0" + seconds;
+			}
+			//输出到页面
+			document.getElementById(id).innerHTML = days + "D-" + hours + ":" + minutes + ":" + seconds;
+			//延迟一秒执行自己
+			setTimeout(function () {
+				TimeDown(id, endDateStr);
+			}, 1000)
+		}
     </script>
   </body>
 </html>
